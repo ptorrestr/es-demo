@@ -29,7 +29,7 @@ class Product:
 
 @pytest.fixture(scope="module", autouse=True)
 def populate_and_delete(elasticsearch_ready):
-    # Create index
+    # Create index that contains multiple mappings
     index = "m-index-1"
     uri = f"{elasticsearch_ready}/{index}"
     settings = json.loads(pathlib.Path("./index.json").read_text())
@@ -41,7 +41,8 @@ def populate_and_delete(elasticsearch_ready):
             requests.delete(uri)
         else:
             assert False, print(resp.text)
-    # Populate index
+    # Populate index with data. Here we assume the data contains fields for different
+    # languages
     num_lines = sum(1 for line in open("productos_cleaned.csv")) - 1
     with open("productos_cleaned.csv", "r") as f:
         reader = csv.DictReader(f, delimiter=",", quotechar='"')
@@ -62,12 +63,16 @@ def populate_and_delete(elasticsearch_ready):
                         i + 1, num_lines, (i + 1) / num_lines
                     )
                 )
-
+    # return index uri
     yield uri
 
 
 @pytest.mark.parametrize("query", sorted(pathlib.Path("./queries").glob("q1*.json")))
 def test_multi_language(populate_and_delete, query, caplog):
+    """For each query q1*, we call our index. Each query is done to a target field
+    depending of the language, thus we do not need to control the output as it will
+    be language-aware.
+    """
     with caplog.at_level(logging.DEBUG):
         q = json.loads(pathlib.Path(query).read_text())
         resp = requests.get(f"{populate_and_delete}/_search", json=q)
