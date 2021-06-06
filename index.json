@@ -1,0 +1,97 @@
+{
+    "mappings": {
+        "properties": {
+            "id": {"type":"int"},
+            "description": { 
+                "type": "text",
+                "fields": {
+                    "spanish": { 
+                        "type":     "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            },
+            "origin": {
+                "type": "text",
+                "fields": {
+                    "spanish": {
+                        "type": "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            },
+            "section": {
+                "type": "text",
+                "fields": {
+                    "spanish": {
+                        "type": "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            },
+            "family": {
+                "type": "text",
+                "fields": {
+                    "spanish": {
+                        "type": "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            },
+            "brand": {
+                "type": "text",
+                "fields": {
+                    "spanish": {
+                        "type": "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            },
+            "variety": {
+                "type": "text",
+                "fields": {
+                    "spanish": {
+                        "type": "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            },
+            "format": {
+                "type": "text",
+                "fields": {
+                    "spanish": {
+                        "type": "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            },
+            "group": {
+                "type": "text",
+                "fields": {
+                    "spanish": {
+                        "type": "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            },
+            "internet_description": {
+                "type": "text",
+                "fields": {
+                    "spanish": {
+                        "type": "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            },
+            "manufacturer": {
+                "type": "text",
+                "fields": {
+                    "spanish": {
+                        "type": "text",
+                        "analyzer": "spanish"
+                    }
+                }
+            }
+        }
+    }
+}
