@@ -3,6 +3,7 @@ import requests
 from urllib3.util.retry import Retry
 from requests.adapters import HTTPAdapter
 
+
 @pytest.fixture(scope="session")
 def elasticsearch_ready(session_scoped_container_getter) -> str:
     """Wait for ElasticSearch to become responsive"""

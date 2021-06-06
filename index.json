@@ -1,13 +1,17 @@
 {
     "mappings": {
+        "dynamic": false,
         "properties": {
-            "id": {"type":"int"},
-            "description": { 
+            "description": {
                 "type": "text",
                 "fields": {
-                    "spanish": { 
+                    "spanish": {
                         "type":     "text",
                         "analyzer": "spanish"
+                    },
+                    "portuguese": {
+                        "type":     "text",
+                        "analyzer": "portuguese"
                     }
                 }
             },

@@ -1,0 +1,11 @@
+{
+    "query": {
+      "multi_match": {
+        "query": "mantequilla",
+        "fields": [
+          "description.spanish"
+        ],
+        "type": "most_fields"
+      }
+    }
+}

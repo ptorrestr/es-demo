@@ -1,0 +1,27 @@
+default_language_version:
+  python: python3.9
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.4.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/psf/black
+    rev: 20.8b1
+    hooks:
+      - id: black
+  - repo: https://github.com/kynan/nbstripout
+    rev: 0.3.9
+    hooks:
+      - id: nbstripout
+        files: ".ipynb"
+  - repo: https://github.com/PyCQA/flake8
+    rev: "3.9.0"
+    hooks:
+      - id: flake8
+  - repo: https://github.com/ptorrestr/requirements-hook
+    rev: e69488f4bc8eabbee397cac13743d89fdafa8744
+    hooks:
+      - id: gen-requirements
+        args: ["-d"]

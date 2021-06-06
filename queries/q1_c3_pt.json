@@ -1,0 +1,11 @@
+{
+    "query": {
+      "multi_match": {
+        "query": "condensado",
+        "fields": [
+          "description.portuguese"
+        ],
+        "type": "most_fields"
+      }
+    }
+}
