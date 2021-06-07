@@ -37,7 +37,7 @@ Some cons in this approach are:
 - The mappings are more complex and maintaining them might get _tricky_.
 - The performance of the index might get hurt, especially if the number of language-country combinations is high.
 
-### Solution Q1
+### Code for Q1
 
 We created a simple code to index data using the __multi-index__ approach.
 We assume the field `description` in our dataset is multi-language and created two fields for Spanish and Portuguese.
@@ -49,3 +49,21 @@ pytest tests/test_q1.py
 ```
 
 ## Q2
+
+Many components play a major role when determining the relevance score between the items and the query.
+Any improvement in this score will need to consider these components:
+
+1. __The scoring (or similarity) function__: The function that determines the similarity between the query and the documents (e.g. products, shops, etc). In this regard, `BM25` is one of the most widely used heuristics and have been extensively evaluated in many use-cases. Still, there are plenty of options in the literature that can be considered for this role [1].
+2. __The structure of the documents__: Historically, inverted indexes are based on flat text document retrieval. However, this can be adapted to more sophisticated scenarios where the items of interest are structured. For example, if the schema of the items is composed of three fields: _category_, _tags_, and _description_, then we can leverage the relevance of these fields using different heuristics such as weighted average, softmax, etc.
+3. __Vector space and embeddings__: Typically, items are represented in the language using a _vector space_, in which each component represents a particular word or term. Since the terms of the queries are user-dependent, there are high chances new terms might appear in the query. This gap between the language of the queries and the items can be controlled using stemming (reduce a term to its root based on prefixes and suffixes) or lemmatization (similar to stemming but based on language-dependent ontologies). The same objective can be achieved by using supervised models to create word embedding models, in which the components of their vector spaces represent the semantics of the language rather than pure lexical terms.
+
+The evaluation of the relevance score has been extensively discussed in the literature [1]. Some examples are:
+
+- __Precision & recall @ K__: Here the retrieval process is seen as a binary classification problem, in which the system under evaluation _must determine which item is relevant at the top k positions_. The dataset consists of queries whose results have been annotated as relevant and not relevant. The problem can then be evaluated as any other classification model.
+- __Mean Average Precision (mAP) @ K__: Since the user wants to have its response at the top of the result list, it is necessary to incorporate such expectation in the evaluation process. _mAP@k_ aims to resolve this by repeatedly evaluating the average precision at the top-_k_ list and then obtaining the mean among them. The average precision evaluates how well the retrieval process is obtaining relevant items at each position of the top-$k$ list. Relevant items at the top positions will have a major impact on the score than items at the end of the result list.
+- __Normalized Discounted Cumulative Gain (nDCG) @ K__: Although _mAP_ considers the position of the relevant items in the result, it cannot consider the weight of relevant items, _i.e._ some items are more relevant than others. This can be solved using the well-known heuristic DCG. This evaluation compares the resulting and expected rankings and measures the divergence between them based on a logarithmic function. Since this metric measures the divergence, the relevance of the item is not limited to a binary model. Thus, we can employ graded relevance models.
+- __Correlations & Kendall-$\tau$__: Since the output of the retrieval process is a ranking, we can simply measure the correlation between them and the expected ranking.
+
+## References
+
+- [1] Baeza-Yates, Ricardo, and Berthier Ribeiro-Neto. Modern information retrieval. Vol. 463. New York: ACM press, 1999.
