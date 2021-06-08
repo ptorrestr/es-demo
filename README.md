@@ -64,6 +64,14 @@ The evaluation of the relevance score has been extensively discussed in the lite
 - __Normalized Discounted Cumulative Gain (nDCG) @ K__: Although _mAP_ considers the position of the relevant items in the result, it cannot consider the weight of relevant items, _i.e._ some items are more relevant than others. This can be solved using the well-known heuristic DCG. This evaluation compares the resulting and expected rankings and measures the divergence between them based on a logarithmic function. Since this metric measures the divergence, the relevance of the item is not limited to a binary model. Thus, we can employ graded relevance models.
 - __Correlations & Kendall-$\tau$__: Since the output of the retrieval process is a ranking, we can simply measure the correlation between them and the expected ranking.
 
+The default relevance in Lucene (and by extension ElasticSearch) is BM25. BM25 is a well-established heuristic that combines several well-known principles into a single equation: term frequency, document length and inverse document frequency [2].
+Despite BM25 not being derived from any theoretical framework, it has been applied to a wide range of problems successfully.
+Still, improving BM25 is possible and is largely subjected to the domain of the documents.
+For example, if we consider the items to be more like _entities_ (in the sense that they are composed of fields), there are several techniques that can be used to improve the search, especially considering that entities might have relations among themselves [3].
+Therefore, without any knowledge of the data and the queries, it is difficult to propose a new relevance function.
+
 ## References
 
 - [1] Baeza-Yates, Ricardo, and Berthier Ribeiro-Neto. Modern information retrieval. Vol. 463. New York: ACM press, 1999.
+- [2] Lavrenko, Victor. A generative theory of relevance. Vol. 26. Springer Science & Business Media, 2008.
+- [3] Torres-Tramón, Pablo, Mohan Timilsina, and Conor Hayes. "A diffusion-based method for entity search." 2019 IEEE 13th International Conference on Semantic Computing (ICSC). IEEE, 2019.
