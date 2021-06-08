@@ -2,7 +2,7 @@
 
 ## Run
 
-You might need to set `max_map_count=262144` in your system in order to run Elastic Search as containers.
+You might need to set `max_map_count=262144` in your system in order to run ElasticSearch as containers.
 
 ```bash
 sysctl -w vm.max_map_count=262144
@@ -10,7 +10,7 @@ sysctl -w vm.max_map_count=262144
 
 We assume that:
 
-- You have `Python` in virtual environment (We provide files for `pipenv` files, and `requirements.txt` for `pip`)
+- You have `Python` in a virtual environment (We provide files for `pipenv` files, and `requirements.txt` for `pip`)
 - `docker` and `docker-compose` are available. Feel free to explore the images we are using in the `docker-compose.yml` file in case you have any security concerns.
 
 Please, install the dependencies using one of the methods listed below:
@@ -127,7 +127,7 @@ You can test our example with the following command:
 pytest tests/test_q3.py -s
 ```
 
-The output of the query `'queries/q3_c1_es.json` shows the results biased towards the category `wine` while the results in  `'queries/q3_c2_es.json` are intermingling different categories.
+The output of the query `'queries/q3_c1_es.json` shows the results biased towards the category `wine` while the results in `'queries/q3_c2_es.json` are intermingling different categories.
 
 ## Q4
 
@@ -136,7 +136,7 @@ However, this feature must be used with caution as it might take time to update 
 Fortunately, ElasticSearch provides a bulk API to handle expensive insertions and updates.
 
 In this way, we can implement a data pipeline that takes the new data/updates and generates a call of the bulk API
-The insertions and updates can be divided into several requests, and handle over to the ES in an orderly maner.
+The insertions and updates can be divided into several requests, and handled over to the ES in an orderly manner.
 The pipeline must be scheduled in off-pick hours to reduce the pressure of large changes in the indices.
 
 ## Q5
@@ -169,7 +169,7 @@ ID | TIMESTAMP | TERMS
 
 where `ID` is the id of the request, `TIMESTAMP` is the time of the request and `TERMS` is the term of the request.
 
-We can then create a visalization in Kibana such that similar terms are grouped if they are identical.
+We can then create a visualization in Kibana such that similar terms are grouped if they are identical.
 
 You can generate the dashboard using the following commands:
 
