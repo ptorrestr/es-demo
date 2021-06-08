@@ -46,7 +46,7 @@ Some cons in this approach are:
 - The mappings are more complex and maintaining them might get _tricky_.
 - The performance of the index might get hurt, especially if the number of language-country combinations is high.
 
-### Example code
+### Example code Q1
 
 We created a simple code to index data using the __multi-index__ approach.
 
@@ -58,7 +58,7 @@ For this example, we assume the field `description` in our dataset is multi-lang
 You can get the answer for this solution by running:
 
 ```bash
-pytest tests/test_q1.py
+pytest tests/test_q1.py -s
 ```
 
 ## Q2
@@ -89,7 +89,7 @@ Many variables are available to personalize the results.
 For instance, the user's geographic location, previous searches, user's interest or profile.
 We can implement the personalization in ElasticSearch using segmentation, i.e. define cohorts of users according to the queries performed in the past, or any other user model that can identify the preferences of the users.
 
-### Example code
+### Example code Q3
 
 Let's say we have a user interested in __wines__.
 We can include in the query terms related to such interest and filter the result accordingly.
@@ -179,6 +179,12 @@ pytest --docker-compose-no-build --use-running-containers tests/test_q7.py -s
 ```
 
 Now visit [http://localhost:5601/app/dashboards#/view/ba239930-c80c-11eb-9d02-f17a79c9ce20](http://localhost:5601/app/dashboards#/view/ba239930-c80c-11eb-9d02-f17a79c9ce20)
+
+Once you finish, you can stop docker:
+
+```bash
+docker-compose down
+```
 
 ## References
 

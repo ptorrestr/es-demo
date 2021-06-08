@@ -68,13 +68,14 @@ def populate_and_delete(elasticsearch_ready):
     yield uri
 
 
-def test_create_dashboard(populate_and_delete, caplog):
+def test_create_dashboard(populate_and_delete, kibana_ready, caplog):
     """Create dashboard for kibana"""
+    uri = kibana_ready
     with caplog.at_level(logging.DEBUG):
 
         dashboard = json.loads(pathlib.Path("./dashboard.json").read_text())
         resp = requests.post(
-            "http://localhost:5601/api/kibana/dashboards/import",
+            f"{uri}/api/kibana/dashboards/import",
             headers={"kbn-xsrf": "true"},
             json=dashboard,
         )
