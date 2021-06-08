@@ -145,7 +145,7 @@ High CPU usage might be related to:
 
 1. __JVM issues__: the JVM does not have enough space and the garbage collector is monopolizing the CPU. Incrementing the heap size might solve this problem.
 2. __Load imbalance__: This is likely when a subset of nodes have higher CPU usage than others.
-3. __Memory swapping__: If the machine does not have enough RAM, then the system is likely to enter into _thrasing_.
+3. __Memory swapping__: If the machine does not have enough RAM, then the system is likely to enter into _thrashing_.
 4. __Indexing issues__: If the CPU usage is high when indexing, then it implies that the strategy in the construction of the index might be wrong. Consider that the insertion and update of items need to be handled in off-pick hours.
 5. __Query issues__: Some queries might be too expensive. Consider the use of filters or reduce the size of the response. Also, think about the use of cache memories for repetitive and expensive queries.
 6. __Too many indices__: A large number of replicas and shards might degrade the performance when the machine is not big enough.
