@@ -46,10 +46,14 @@ Some cons in this approach are:
 - The mappings are more complex and maintaining them might get _tricky_.
 - The performance of the index might get hurt, especially if the number of language-country combinations is high.
 
-### Code for Q1
+### Example code
 
 We created a simple code to index data using the __multi-index__ approach.
-We assume the field `description` in our dataset is multi-language and created two fields for Spanish and Portuguese.
+
+We included a sample dataset (file: `productos_cleaned.csv`).
+This dataset is a list of grocery products, including the description of them and categories.
+
+For this example, we assume the field `description` in our dataset is multi-language and we created two meta fields, one for Spanish and another for Portuguese.
 
 You can get the answer for this solution by running:
 
@@ -85,7 +89,7 @@ Many variables are available to personalize the results.
 For instance, the user's geographic location, previous searches, user's interest or profile.
 We can implement the personalization in ElasticSearch using segmentation, i.e. define cohorts of users according to the queries performed in the past, or any other user model that can identify the preferences of the users.
 
-### Example
+### Example code
 
 Let's say we have a user interested in __wines__.
 We can include in the query terms related to such interest and filter the result accordingly.
@@ -98,7 +102,7 @@ Since our example dataset has a field for categories (`group`), we can filter in
             "must": [
                 {
                     "match": {
-                        "description.spanish": "tinto"
+                        "description.spanish": "blanco"
                     }
                 }
             ],
