@@ -8,6 +8,7 @@ requests = "*"
 pytest = "*"
 pytest-docker-compose = "*"
 dataclasses-json = "*"
+faker = "*"
 
 [dev-packages]
 pre-commit = "*"

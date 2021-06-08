@@ -2,12 +2,21 @@
 
 ## Run
 
-You need to set `max_map_count=262144`
+You might need to set `max_map_count=262144` in your system in order to run Elastic Search as containers.
 
 ```bash
 sysctl -w vm.max_map_count=262144
 ```
 
+We assume that:
+
+- You have `Python` in virtual environment (We provide files for `pipenv` files, and `requirements.txt` for `pip`)
+- `docker` and `docker-compose` are available. Feel free to explore the images we are using in the `docker-compose.yml` file in case you have any security concerns.
+
+Please, install the dependencies using one of the methods listed below:
+
+- `pip install -r requirements.txt`
+- `pipenv install`
 
 ## Q1
 
@@ -148,7 +157,24 @@ High disk usage might be related to:
 
 ## Q7
 
-Kibana
+Let's assume we have the following data:
+
+```csv
+ID | TIMESTAMP | TERMS
+```
+
+where `ID` is the id of the request, `TIMESTAMP` is the time of the request and `TERMS` is the term of the request.
+
+We can then create a visalization in Kibana such that similar terms are grouped if they are identical.
+
+You can generate the dashboard using the following commands:
+
+```bash
+docker-compose up -d
+pytest --docker-compose-no-build --use-running-containers tests/test_q7.py -s
+```
+
+Now visit [http://localhost:5601/app/dashboards#/view/ba239930-c80c-11eb-9d02-f17a79c9ce20](http://localhost:5601/app/dashboards#/view/ba239930-c80c-11eb-9d02-f17a79c9ce20)
 
 ## References
 
