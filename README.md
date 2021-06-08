@@ -48,7 +48,7 @@ Some cons in this approach are:
 
 ### Example code Q1
 
-We created a simple code to index data using the __multi-index__ approach.
+We created a simple code to index data using the __multi-mapping__ approach.
 
 We included a sample dataset (file: `productos_cleaned.csv`).
 This dataset is a list of grocery products, including the description of them and categories.
