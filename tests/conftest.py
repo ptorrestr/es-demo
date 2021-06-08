@@ -13,7 +13,7 @@ def elasticsearch_ready(session_scoped_container_getter) -> str:
     network = service.network_info[0]
     api_url = f"http://{network.hostname}:{network.host_port}"
     request_session = requests.Session()
-    retries = Retry(total=5, backoff_factor=0.1, status_forcelist=[500, 502, 503, 504])
+    retries = Retry(total=5, backoff_factor=0.6, status_forcelist=[500, 502, 503, 504])
     request_session.mount("http://", HTTPAdapter(max_retries=retries))
     assert request_session.get(api_url)
     return api_url

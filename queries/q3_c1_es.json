@@ -1,0 +1,20 @@
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match": {
+                        "description.spanish": "blanco"
+                    }
+                }
+            ],
+            "filter": [
+                {
+                    "term": {
+                        "group": "vinos"
+                    }
+                }
+            ]
+        }
+    }
+}

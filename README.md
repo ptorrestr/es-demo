@@ -70,6 +70,86 @@ Still, improving BM25 is possible and is largely subjected to the domain of the 
 For example, if we consider the items to be more like _entities_ (in the sense that they are composed of fields), there are several techniques that can be used to improve the search, especially considering that entities might have relations among themselves [3].
 Therefore, without any knowledge of the data and the queries, it is difficult to propose a new relevance function.
 
+## Q3
+
+Many variables are available to personalize the results.
+For instance, the user's geographic location, previous searches, user's interest or profile.
+We can implement the personalization in ElasticSearch using segmentation, i.e. define cohorts of users according to the queries performed in the past, or any other user model that can identify the preferences of the users.
+
+### Example
+
+Let's say we have a user interested in __wines__.
+We can include in the query terms related to such interest and filter the result accordingly.
+Since our example dataset has a field for categories (`group`), we can filter in that particular field following the user's interest, as shown below:
+
+```json
+{
+    "query": {
+        "bool": {
+            "must": [
+                {
+                    "match": {
+                        "description.spanish": "tinto"
+                    }
+                }
+            ],
+            "filter": [
+                {
+                    "term": {
+                        "group": "vinos"
+                    }
+                }
+            ]
+        }
+    }
+}
+```
+
+Notice that we can include as many filters as we want.
+More complex queries can also be considered, like multi-field matching or manipulation of the thresholds.
+
+You can test our example with the following command:
+
+```bash
+pytest tests/test_q3.py -s
+```
+
+The output of the query `'queries/q3_c1_es.json` shows the results biased towards the category `wine` while the results in  `'queries/q3_c2_es.json` are intermingling different categories.
+
+## Q4
+
+ElasticSearch allows us to update items in the index.
+However, this feature must be used with caution as it might take time to update a large collection of documents.
+Fortunately, ElasticSearch provides a bulk API to handle expensive insertions and updates.
+
+In this way, we can implement a data pipeline that takes the new data/updates and generates a call of the bulk API
+The insertions and updates can be divided into several requests, and handle over to the ES in an orderly maner.
+The pipeline must be scheduled in off-pick hours to reduce the pressure of large changes in the indices.
+
+## Q5
+
+High CPU usage might be related to:
+
+1. __JVM issues__: the JVM does not have enough space and the garbage collector is monopolizing the CPU. Incrementing the heap size might solve this problem.
+2. __Load imbalance__: This is likely when a subset of nodes have higher CPU usage than others.
+3. __Memory swapping__: If the machine does not have enough RAM, then the system is likely to enter into _thrasing_.
+4. __Indexing issues__: If the CPU usage is high when indexing, then it implies that the strategy in the construction of the index might be wrong. Consider that the insertion and update of items need to be handled in off-pick hours.
+5. __Query issues__: Some queries might be too expensive. Consider the use of filters or reduce the size of the response. Also, think about the use of cache memories for repetitive and expensive queries.
+6. __Too many indices__: A large number of replicas and shards might degrade the performance when the machine is not big enough.
+
+## Q6
+
+High disk usage might be related to:
+
+1. __Indexing issues__: Fields that are not searchable should be removed from the mappings.
+2. __Shards__: Smaller shards are inefficient in terms of storage. Consider larger ones.
+3. __Zombie indices__: Indices that are not used (or they are old) should be removed. These can be later recreated from snapshots if needed.
+4. __High replicas__: Reduce the number of replicas (especially for old indices)
+
+## Q7
+
+Kibana
+
 ## References
 
 - [1] Baeza-Yates, Ricardo, and Berthier Ribeiro-Neto. Modern information retrieval. Vol. 463. New York: ACM press, 1999.
